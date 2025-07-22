@@ -1,1 +1,8 @@
-
+{
+  "title": "Split Mirror",
+  "author": "Thamuz Gamer",
+  "version": "1.0",
+  "description": "Um jogo de puzzle com reflexos e plataformas.",
+  "filename": "main.void",
+  "icon": "icon.png"
+}
