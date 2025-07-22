@@ -4,33 +4,33 @@
   <meta charset="UTF-8">
   <title>VOID Homebrew</title>
   <style>
-    body { font-family: sans-serif; background: #111; color: #fff; }
-    .game { background: #222; padding: 10px; margin: 10px; border-radius: 8px; display: flex; }
-    img { width: 64px; height: 64px; margin-right: 10px; }
+    body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+    .cart { background: #222; padding: 10px; margin: 10px; border-radius: 10px; width: 300px; display: inline-block; vertical-align: top; }
+    .cart img { width: 100%; border-radius: 10px; }
+    .cart button { margin-top: 10px; padding: 5px 10px; border: none; background: #555; color: white; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h1>VOID Homebrew</h1>
-  <div id="list"></div>
+  <h1>🏪 VOID Homebrew</h1>
+  <div id="store"></div>
 
   <script>
-    const repo = "https://raw.githubusercontent.com/seu-usuario/void-homebrew/main/data/";
-    const carts = ["cart1", "cart2"];
+    const carts = ['cart1', 'cart2']; // Adicione aqui os diretórios dos seus cartuchos
 
-    async function loadCart(id) {
-      const meta = await fetch(`${repo}${id}/meta.json`).then(r => r.json());
-      const container = document.createElement("div");
-      container.className = "game";
-      container.innerHTML = `
-        <img src="${repo}${id}/cover.png" alt="cover">
-        <div>
-          <h2>${meta.title}</h2>
-          <p><strong>By:</strong> ${meta.author}</p>
-          <p>${meta.description}</p>
-          <a href="${repo}${id}/${meta.filename}" download>Download</a>
-        </div>
+    async function loadCart(cart) {
+      const res = await fetch(`carts/${cart}/info.json`);
+      const info = await res.json();
+
+      const div = document.createElement("div");
+      div.className = "cart";
+      div.innerHTML = `
+        <img src="carts/${cart}/${info.icon}" alt="${info.title}">
+        <h3>${info.title}</h3>
+        <p><strong>Autor:</strong> ${info.author}</p>
+        <p>${info.description}</p>
+        <a href="carts/${cart}/${info.filename}" download><button>⬇️ Baixar</button></a>
       `;
-      document.getElementById("list").appendChild(container);
+      document.getElementById("store").appendChild(div);
     }
 
     carts.forEach(loadCart);
