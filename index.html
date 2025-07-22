@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>VOID Homebrew</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #fff; }
+    .game { background: #222; padding: 10px; margin: 10px; border-radius: 8px; display: flex; }
+    img { width: 64px; height: 64px; margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>VOID Homebrew</h1>
+  <div id="list"></div>
+
+  <script>
+    const repo = "https://raw.githubusercontent.com/seu-usuario/void-homebrew/main/data/";
+    const carts = ["cart1", "cart2"];
+
+    async function loadCart(id) {
+      const meta = await fetch(`${repo}${id}/meta.json`).then(r => r.json());
+      const container = document.createElement("div");
+      container.className = "game";
+      container.innerHTML = `
+        <img src="${repo}${id}/cover.png" alt="cover">
+        <div>
+          <h2>${meta.title}</h2>
+          <p><strong>By:</strong> ${meta.author}</p>
+          <p>${meta.description}</p>
+          <a href="${repo}${id}/${meta.filename}" download>Download</a>
+        </div>
+      `;
+      document.getElementById("list").appendChild(container);
+    }
+
+    carts.forEach(loadCart);
+  </script>
+</body>
+</html>
